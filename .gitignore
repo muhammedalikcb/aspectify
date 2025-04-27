@@ -1,0 +1,160 @@
+# --------------------------------------------
+# Kotlin / Java / Android Studio / IntelliJ
+# --------------------------------------------
+
+# Gradle
+.gradle/
+build/
+*/build/
+
+# Local configuration files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Android
+local.properties
+captures/
+output.json
+
+# Proguard
+proguard/
+proguard-rules.pro
+
+# Signing files
+*.jks
+*.keystore
+*.pem
+*.key
+*.properties
+
+# Crashlytics / Firebase
+crashlytics-build.properties
+fabric.properties
+
+# Others
+*.apk
+*.ap_    # Android APK file format
+*.dex    # Android Dalvik Executable files
+*.class  # Java bytecode
+*.log    # Log files
+
+# Jetpack Compose / UI tooling
+.uiModePreview.json
+*.cachestore
+
+# Kotlin
+*.kotlin_module
+
+# KAPT (Kotlin Annotation Processing Tool) generated files
+build/tmp/kapt/
+build/tmp/kapt3/
+build/generated/
+
+# NDK
+.externalNativeBuild/
+
+# OS / System Files (macOS)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Spotlight files
+.metadata_never_index
+*.Spotlight-V100
+
+# Trash
+.Trashes
+
+# macOS Folder Attributes
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Backup Files
+*~ 
+*.swp 
+*.swo 
+*.bak
+
+# VSCode Settings (if you use it)
+.vscode/
+
+# Kotlin Scripting
+.kts-cache/
+
+# Python (in case of any scripts or tools)
+__pycache__/
+*.pyc
+
+# Gradle Wrapper
+gradle-wrapper.jar
+gradle-wrapper.properties.lock
+
+# Test Results
+test-results/
+test-output/
+*.testlog
+
+# SQLite Databases (local test/debug DBs)
+*.db
+*.sqlite
+*.sqlite3
+
+# IntelliJ Coverage Reports
+.idea/.idea_modules/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/libraries/
+.idea/assetWizardSettings.xml
+.idea/gradle.xml
+.idea/compiler.xml
+.idea/codeStyles/
+
+# Android Studio Native .cxx build cache
+.cxx/
+
+# Android Emulator files
+*.hprof
+*.hprof-conv
+
+# Kotlin Daemon
+.kotlin_cache/
+
+# Miscellaneous
+*.tmp
+*.temp
+*.orig
+*.rej
+
+# Logs
+*.log
+logs/
+
+# Backup files (Editor swap/backup files)
+*.orig
+*.swp
+*.swo
+
+# XML backup files
+*.bak
+
+# Environment files (if you set something like .env)
+.env
+.env.*
+
+# Git ignore file itself backup
+.gitignore~
+
+# JetBrains Rider
+.idea/.rider/
+
+# Aspectify-specific outputs (if any)
+aspectify-generated/
