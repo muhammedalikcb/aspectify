@@ -1,7 +1,7 @@
 package com.muhammedalikocabey.aspectify.demo
 
+import com.muhammedalikocabey.aspectify.core.Aspectify
 import com.muhammedalikocabey.aspectify.core.proxyOf
-import com.muhammedalikocabey.aspectify.session.UserSession
 
 /**
  * Aspectify sisteminin JVM demo kullanım örneği.
@@ -12,7 +12,7 @@ fun main() {
         // İstersen burada logger değiştirilebilir: logger = ConsoleLogger / AndroidLogger
     }
 
-    UserSession.loginAs("admin") // admin olarak giriş yapıyoruz
+    Aspectify.roleChecker = { role -> role == "admin" } // admin olarak giriş yapıyoruz
 
     proxyService.login("admin", "1234")
 

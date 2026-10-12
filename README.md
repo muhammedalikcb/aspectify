@@ -1,14 +1,12 @@
-Aspectify
+# Aspectify
 
-![Kotlin](https://img.shields.io/badge/Kotlin-1.9.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Build](https://github.com/muhammedalikocabey/aspectify/actions/workflows/ci.yml/badge.svg)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.muhammedalikcb/aspectify-core)](https://central.sonatype.com/artifact/io.github.muhammedalikcb/aspectify-core)
+[![CI](https://github.com/muhammedalikcb/aspectify/actions/workflows/ci.yml/badge.svg)](https://github.com/muhammedalikcb/aspectify/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.0-7F52FF?logo=kotlin&logoColor=white)
+[![Last Commit](https://img.shields.io/github/last-commit/muhammedalikcb/aspectify)](https://github.com/muhammedalikcb/aspectify/commits/main)
+[![Stars](https://img.shields.io/github/stars/muhammedalikcb/aspectify?style=social)](https://github.com/muhammedalikcb/aspectify/stargazers)
 
-Latest commit date: ![Last Commit](https://img.shields.io/github/last-commit/makocabey/aspectify)
-
-Repo stars: ![Stars](https://img.shields.io/github/stars/makocabey/aspectify?style=social)
-
-Repo forks: ![Forks](https://img.shields.io/github/forks/makocabey/aspectify?style=social)
 ---
 
 ## 🇹🇷 Türkçe
@@ -49,6 +47,36 @@ Dynamic Proxy ve Kotlin Reflection altyapısıyla çalışır.
 
 ### 📦 Kurulum ve Kullanım
 
+#### 0. Bağımlılığı Ekleme
+
+Aspectify Maven Central'da üç modül olarak yayınlanır:
+
+| Modül | Ne için |
+| --- | --- |
+| `aspectify-core` | Anotasyonlar, proxy ve interceptor. Saf Kotlin/JVM, Android'e bağımlı değil. |
+| `aspectify-android` | `AndroidLogger`, `UserSession` ve ana thread kontrolü. `aspectify-core`'u da getirir. |
+| `aspectify-okhttp` | OkHttp istekleri için loglama ve süre ölçümü yapan interceptor. |
+
+```kotlin
+dependencies {
+    implementation("io.github.muhammedalikcb:aspectify-android:1.0.0") // Android
+    // implementation("io.github.muhammedalikcb:aspectify-core:1.0.0") // saf Kotlin/JVM
+    // implementation("io.github.muhammedalikcb:aspectify-okhttp:1.0.0") // OkHttp
+}
+```
+
+Android'de uygulama açılırken bir kez çağırın. `@BackgroundThread` ve `@Authenticated` bu sayede çalışır:
+
+```kotlin
+AspectifyAndroid.install(applicationContext)
+```
+
+Saf JVM'de rol kontrolünü kendiniz bağlayın:
+
+```kotlin
+Aspectify.roleChecker = { role -> currentUser.roles.contains(role) }
+```
+
 #### 1. Proxy Nesnesi Oluşturma
 
 ```kotlin
@@ -83,56 +111,19 @@ service.deleteUser("user123")
 
 ### ⚙️ Gereksinimler
 
-- Kotlin 1.9+
-- Android API 21+
-- JVM 8+
-- Kotlin Coroutines desteği
+- Kotlin 2.0+
+- JVM 11+ (`aspectify-core`, `aspectify-okhttp`)
+- Android minSdk 24 (`aspectify-android`)
+- Kotlin Coroutines (bağımlılık olarak otomatik gelir)
 
 ---
 
 ### 🔄 Continuous Integration (CI)
 
-Aspectify, GitHub Actions üzerinden otomatik build ve test işlemleri için bir CI (Continuous Integration) altyapısına sahiptir.
+Her push ve pull request'te GitHub Actions projeyi derler, testleri çalıştırır ve kütüphaneleri yerel Maven deposuna yayınlayarak paketlemenin bozulmadığını kontrol eder (`.github/workflows/ci.yml`).
 
-Her **push** veya **pull request** sonrasında:
+`v1.0.0` gibi bir etiket gönderildiğinde `.github/workflows/release.yml` kütüphaneleri imzalayıp Maven Central'a yayınlar ve bir GitHub Release oluşturur.
 
-- Proje kodu checkout edilir,
-- Java 17 kurulumu yapılır,
-- Gradle ile proje temizlenir, build edilir ve tüm testler çalıştırılır.
-
-Workflow dosyası yolu:
-
-```
-.github/workflows/ci.yml
-```
-
-Workflow içeriği:
-
-```yaml
-name: Aspectify CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Build Project and Run Tests
-        run: ./gradlew clean build test
-```
 
 ---
 
@@ -210,6 +201,36 @@ Built on top of Dynamic Proxy and Kotlin Reflection.
 
 ### 📦 Installation & Usage
 
+#### 0. Add the Dependency
+
+Aspectify is published to Maven Central as three modules:
+
+| Module | Use it for |
+| --- | --- |
+| `aspectify-core` | Annotations, proxy and interceptor. Pure Kotlin/JVM, no Android dependency. |
+| `aspectify-android` | `AndroidLogger`, `UserSession` and main thread checks. Brings in `aspectify-core`. |
+| `aspectify-okhttp` | OkHttp interceptor that logs requests and their duration. |
+
+```kotlin
+dependencies {
+    implementation("io.github.muhammedalikcb:aspectify-android:1.0.0") // Android
+    // implementation("io.github.muhammedalikcb:aspectify-core:1.0.0") // plain Kotlin/JVM
+    // implementation("io.github.muhammedalikcb:aspectify-okhttp:1.0.0") // OkHttp
+}
+```
+
+On Android, call this once at startup so `@BackgroundThread` and `@Authenticated` work:
+
+```kotlin
+AspectifyAndroid.install(applicationContext)
+```
+
+On plain JVM, plug in your own role check:
+
+```kotlin
+Aspectify.roleChecker = { role -> currentUser.roles.contains(role) }
+```
+
 #### 1. Create a Proxy
 
 ```kotlin
@@ -244,56 +265,19 @@ service.deleteUser("user123")
 
 ### ⚙️ Requirements
 
-- Kotlin 1.9+
-- Android API 21+
-- JVM 8+
-- Kotlin Coroutine support
+- Kotlin 2.0+
+- JVM 11+ (`aspectify-core`, `aspectify-okhttp`)
+- Android minSdk 24 (`aspectify-android`)
+- Kotlin Coroutines (pulled in automatically)
 
 ---
 
 ### 🔄 Continuous Integration (CI)
 
-Aspectify provides a GitHub Actions workflow for automatic build and test runs.
+On every push and pull request GitHub Actions builds the project, runs the tests and publishes the libraries to the local Maven repository to make sure packaging still works (`.github/workflows/ci.yml`).
 
-Every **push** or **pull request**:
+Pushing a tag like `v1.0.0` runs `.github/workflows/release.yml`, which signs the libraries, publishes them to Maven Central and creates a GitHub Release.
 
-- Checks out the project,
-- Installs Java 17,
-- Runs Gradle clean build and tests.
-
-Workflow file:
-
-```
-.github/workflows/ci.yml
-```
-
-Workflow content:
-
-```yaml
-name: Aspectify CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Build Project and Run Tests
-        run: ./gradlew clean build test
-```
 
 ---
 

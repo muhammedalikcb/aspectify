@@ -27,7 +27,9 @@ proguard-rules.pro
 *.keystore
 *.pem
 *.key
-*.properties
+keystore.properties
+signing.properties
+secrets.properties
 
 # Crashlytics / Firebase
 crashlytics-build.properties

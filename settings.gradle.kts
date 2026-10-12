@@ -20,4 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Aspectify"
+include(":aspectify-core")
+include(":aspectify-android")
+include(":aspectify-okhttp")
 include(":app")

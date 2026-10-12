@@ -1,8 +1,6 @@
 package com.muhammedalikocabey.aspectify.core
 
-import android.os.Looper
 import com.muhammedalikocabey.aspectify.annotations.*
-import com.muhammedalikocabey.aspectify.session.UserSession
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import java.lang.reflect.InvocationHandler
@@ -84,12 +82,12 @@ class InterceptorHandler(private val target: Any) : InvocationHandler {
         }
 
         // Yetkilendirme kontrolü
-        if (authenticated != null && !UserSession.hasRole(authenticated.role)) {
+        if (authenticated != null && !Aspectify.roleChecker(authenticated.role)) {
             throw AuthorizationFailureException()
         }
 
         // BackgroundThread kontrolü
-        if (backgroundThread != null && Looper.getMainLooper().thread == Thread.currentThread()) {
+        if (backgroundThread != null && Aspectify.mainThreadChecker()) {
             throw IllegalStateException("$methodName sadece background thread'de çalıştırılabilir.")
         }
 
