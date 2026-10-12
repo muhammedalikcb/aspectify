@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.muhammedalikocabey.aspectify.demo.ui.theme.AspectifyTheme
-import com.muhammedalikocabey.aspectify.session.UserSession
+import com.muhammedalikocabey.aspectify.AspectifyAndroid
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        UserSession.init(applicationContext)
+        AspectifyAndroid.install(applicationContext)
 
         setContent {
             AspectifyTheme {

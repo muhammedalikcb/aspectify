@@ -6,22 +6,22 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup JDK
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 17
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+      - uses: gradle/actions/setup-gradle@v4
 
-      - name: Build Project and Run Tests
-        run: ./gradlew clean build test
+      - name: Build, test and check packaging
+        run: ./gradlew build publishToMavenLocal

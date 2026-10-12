@@ -41,6 +41,9 @@ android {
 
 dependencies {
 
+    implementation(project(":aspectify-android"))
+    implementation(project(":aspectify-okhttp"))
+
     implementation(libs.okhttp)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
