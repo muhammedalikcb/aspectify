@@ -7,6 +7,7 @@
 - Cancelling the caller also cancels the target. Cancellation and timeouts are never retried by `@Retryable`.
 - Exceptions from `suspend` methods keep their original type instead of being wrapped in `AspectifyException`.
 - `@Cacheable` keys for `suspend` methods ignore the internal `Continuation` argument, so caching works as expected.
+- The cache, debounce and rate limit state is now thread safe, since suspend calls can resume on another thread.
 - Regular (non suspend) methods behave exactly as before.
 
 ## 1.0.0

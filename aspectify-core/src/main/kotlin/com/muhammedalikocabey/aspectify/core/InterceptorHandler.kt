@@ -7,6 +7,7 @@ import kotlinx.coroutines.withTimeout
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
+import java.util.Collections
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED
@@ -51,9 +52,10 @@ class InterceptorHandler(private val target: Any) : InvocationHandler {
      */
     private object Proceed
 
-    private val cache = mutableMapOf<String, Any?>()
-    private val lastCallTimes = mutableMapOf<String, Long>()
-    private val rateLimits = mutableMapOf<String, Pair<Int, Long>>() // methodName -> (kalanHak, sonSıfırlamaZamanı)
+    // suspend çağrılar farklı thread'lerde devam edebildiği için map'ler senkronize tutulur.
+    private val cache = Collections.synchronizedMap(mutableMapOf<String, Any?>())
+    private val lastCallTimes = Collections.synchronizedMap(mutableMapOf<String, Long>())
+    private val rateLimits = Collections.synchronizedMap(mutableMapOf<String, Pair<Int, Long>>()) // methodName -> (kalanHak, sonSıfırlamaZamanı)
 
     override fun invoke(proxy: Any?, method: Method, args: Array<out Any>?): Any? {
         if (method.isSuspend()) {
