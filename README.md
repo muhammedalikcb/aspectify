@@ -28,6 +28,8 @@ I wrote it because logging, retries and permission checks kept getting copy past
 | `@BackgroundThread` | Throws if the method is called on the main thread |
 | `@Transactional` | Logs start, commit and rollback around the call |
 
+`suspend` methods are supported. They run as real coroutines without blocking the calling thread, cancellation reaches the target, and `@Timeout` uses `withTimeout`.
+
 ## Installation
 
 Aspectify is on Maven Central as three modules:
@@ -40,9 +42,9 @@ Aspectify is on Maven Central as three modules:
 
 ```kotlin
 dependencies {
-    implementation("io.github.muhammedalikcb:aspectify-android:1.0.0") // Android
-    // implementation("io.github.muhammedalikcb:aspectify-core:1.0.0") // plain Kotlin/JVM
-    // implementation("io.github.muhammedalikcb:aspectify-okhttp:1.0.0") // OkHttp
+    implementation("io.github.muhammedalikcb:aspectify-android:1.1.0") // Android
+    // implementation("io.github.muhammedalikcb:aspectify-core:1.1.0") // plain Kotlin/JVM
+    // implementation("io.github.muhammedalikcb:aspectify-okhttp:1.1.0") // OkHttp
 }
 ```
 
@@ -98,7 +100,7 @@ service.deleteUser("user123")
 
 ## Tests and CI
 
-`InterceptorHandlerTest` covers retry, cache and rate limit. Every push and pull request builds the project, runs the tests and publishes to the local Maven repository to make sure packaging still works. Pushing a `v*` tag signs the artifacts, publishes them to Maven Central and creates a GitHub release.
+`InterceptorHandlerTest` covers retry, cache and rate limit. `SuspendInterceptorTest` covers suspend methods: no blocking, exception types, retry, timeout, cancellation and cache. Every push and pull request builds the project, runs the tests and publishes to the local Maven repository to make sure packaging still works. Pushing a `v*` tag signs the artifacts, publishes them to Maven Central and creates a GitHub release.
 
 ## Contributing
 
@@ -131,6 +133,8 @@ Loglama, retry ve yetki kontrolleri her repository ve use case içine kopyalanı
 | `@BackgroundThread` | Method ana thread'den çağrılırsa hata fırlatır |
 | `@Transactional` | Çağrının başlangıç, commit ve rollback adımlarını loglar |
 
+`suspend` methodlar destekleniyor. Çağıran thread'i bloklamadan gerçek coroutine olarak çalışıyorlar, iptal hedef methoda kadar ulaşıyor ve `@Timeout` için `withTimeout` kullanılıyor.
+
 ### Kurulum
 
 Aspectify Maven Central'da üç modül olarak yayında:
@@ -143,9 +147,9 @@ Aspectify Maven Central'da üç modül olarak yayında:
 
 ```kotlin
 dependencies {
-    implementation("io.github.muhammedalikcb:aspectify-android:1.0.0") // Android
-    // implementation("io.github.muhammedalikcb:aspectify-core:1.0.0") // saf Kotlin/JVM
-    // implementation("io.github.muhammedalikcb:aspectify-okhttp:1.0.0") // OkHttp
+    implementation("io.github.muhammedalikcb:aspectify-android:1.1.0") // Android
+    // implementation("io.github.muhammedalikcb:aspectify-core:1.1.0") // saf Kotlin/JVM
+    // implementation("io.github.muhammedalikcb:aspectify-okhttp:1.1.0") // OkHttp
 }
 ```
 
@@ -188,7 +192,7 @@ service.deleteUser("user123")
 
 ### Test ve CI
 
-`InterceptorHandlerTest` retry, cache ve rate limit davranışını test ediyor. Her push ve PR'da proje derlenir, testler çalışır ve paketlemenin bozulmadığını görmek için yerel Maven deposuna yayınlanır. `v*` etiketi gönderildiğinde artifact'ler imzalanıp Maven Central'a yüklenir ve bir GitHub release oluşturulur.
+`InterceptorHandlerTest` retry, cache ve rate limit davranışını test ediyor. `SuspendInterceptorTest` ise suspend methodları test ediyor: bloklamama, hata tipleri, retry, timeout, iptal ve cache. Her push ve PR'da proje derlenir, testler çalışır ve paketlemenin bozulmadığını görmek için yerel Maven deposuna yayınlanır. `v*` etiketi gönderildiğinde artifact'ler imzalanıp Maven Central'a yüklenir ve bir GitHub release oluşturulur.
 
 ### Katkı
 
